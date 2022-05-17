@@ -1,5 +1,5 @@
-const wrapper = document.getElementById('wrapper') as HTMLDivElement;
+const html = document.querySelector('html')!;
 document.querySelector<HTMLElement>('.bulb')!.addEventListener('click', () => {
-    wrapper.classList.toggle('mode--dark');
-    wrapper.classList.toggle('mode--light');
+    html.classList.toggle('mode--dark');
+    html.classList.toggle('mode--light');
 })

@@ -1,13 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+:root {
+    --verySmallText: 1rem;
+    --smallText: 1.2rem;
+    --normalText: 1.4rem;
+    --largeText: 1.8rem;
+    --headingText: 3.2rem;
+}
+
 html {
     /* 10 / 16 = 0.625 */
     font-size: 62.5%;
+    background-color: var(--background);
+    font-family: 'Roboto', sans-serif;
 }
+
 
 #wrapper * {
     transition: all 0.4s;
@@ -18,12 +31,24 @@ html {
 .mode--light {
     /* tint: 60-90% */
     --background: #cfced1;
+    --navBackground: #0d0819;
+    --headerBackground: #eee;
     --bulb: #6e6b75;
+    --text: #0d0819;
+    --btnColor: #5361EE;
+    --btnTextColor: #eee;
+    --btnHoverColor: #3743c7;
 }
 
 .mode--dark {
     --background: #0d0819;
+    --navBackground: #cfced1;
+    --headerBackground: #252130;
     --bulb: #b2b200;
+    --text: #cfced1;
+    --btnColor: #3743c7;
+    --btnTextColor: #eee;
+    --btnHoverColor: #303bb4;
 }
 
 .bulb {
@@ -43,6 +68,64 @@ html {
 #wrapper {
     width: 100vw;
     height: 100vh;
+    display: grid;
+    grid-template-columns: minmax(0, 10fr) minmax(0, 90fr);
     background-color: var(--background);
     transition: all 0.4s;
+}
+
+#navigation {
+    background-color: var(--navBackground);
+}
+
+#main {
+    display: grid;
+    grid-template-rows: minmax(0, 5fr) minmax(0, 95fr);
+    background-color: var(--background);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--headerBackground);
+    color: var(--text);
+}
+
+.header--title {
+    margin-left: 2rem;
+    font-size: var(--largeText);
+}
+
+.header--utils {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2rem;
+    gap: 3rem;
+    font-size: var(--smallText);
+}
+
+#taskBtn {
+    display: block;
+    padding: 0.5rem 1rem;
+    font-weight: 700;
+    font-size: var(--verySmallText);
+    border-radius: 20px;
+    background-color: var(--btnColor);
+    color: var(--btnTextColor);
+    border: none;
+    cursor: pointer;
+}
+
+#taskBtn:hover {
+    background-color: var(--btnHoverColor);
+}
+
+#taskBtn:active {
+    transform: scale(0.98);
+}
+
+.container {
+    background-color: var(--background);
 }
