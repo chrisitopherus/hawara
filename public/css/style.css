@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    /* 10 / 16 = 0.625 */
+    font-size: 62.5%;
+}
+
+#wrapper * {
+    transition: all 0.4s;
+}
+
+/* ---------------------------- */
+
+.mode--light {
+    /* tint: 60-90% */
+    --background: #cfced1;
+    --bulb: #6e6b75;
+}
+
+.mode--dark {
+    --background: #0d0819;
+    --bulb: #b2b200;
+}
+
+.bulb {
+    width: 2.5rem;
+    height: 2.5rem;
+    position: fixed;
+    left: 0;
+    top: 0;
+    fill: var(--bulb);
+    cursor: pointer;
+}
+
+.bulb:hover {
+    transform: scale(1.1);
+}
+
+#wrapper {
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--background);
+    transition: all 0.4s;
+}
