@@ -1,3 +1,4 @@
+// toggles dark/light mode
 const html = document.querySelector('html')!;
 document.querySelector<HTMLElement>('.bulb')!.addEventListener('click', () => {
     html.classList.toggle('mode--dark');

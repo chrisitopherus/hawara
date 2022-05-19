@@ -23,40 +23,67 @@ html {
 
 
 #wrapper * {
-    transition: all 0.4s;
+    transition: all 0.1s;
 }
 
 /* ---------------------------- */
 
 .mode--light {
     /* tint: 60-90% */
-    --background: #cfced1;
-    --navBackground: #0d0819;
-    --headerBackground: #eee;
-    --bulb: #6e6b75;
-    --text: #0d0819;
+    --background: #bab9bc;
+    --navBackground: #242932;
+    --headerBackground: #cfced1;
+    --bulb: #b2b200;
+    --logo: #aaa;
+    --text: #3a3e47;
     --btnColor: #5361EE;
     --btnTextColor: #eee;
-    --btnHoverColor: #3743c7;
+    --btnHoverColor: #4b57d6;
+    --mainBorderColor: #a6a5a7;
+    --tabBorderColor: #5361EE;
+    --tabHoverColor: rgba(83, 96, 238, 0.400);
+    --linkColor: #5361EE;
+    --linkHoverColor: #4b57d6;
+    --taskBorderColor: #919092;
+    --scrollbarColor: #61656c;
+    --scrollbarHoverColor: #575b61;
+
+    /* ------- COLORS ------- */
+    --orange: rgb(255, 128, 0);
 }
 
 .mode--dark {
-    --background: #0d0819;
-    --navBackground: #cfced1;
-    --headerBackground: #252130;
-    --bulb: #b2b200;
-    --text: #cfced1;
-    --btnColor: #3743c7;
+    --background: #242932;
+    --navBackground: #191d23;
+    --headerBackground: #3a3e47;
+    --bulb: #6e6b75;
+    --logo: #aaa;
+    --text: #bab9bc;
+    --btnColor: #512FC9;
     --btnTextColor: #eee;
-    --btnHoverColor: #303bb4;
+    --btnHoverColor: #492ab5;
+    --mainBorderColor: #3a3e47;
+    --tabBorderColor: #512FC9;
+    --tabHoverColor: rgba(80, 47, 201, 0.400);
+    --linkColor: #5361EE;
+    --linkHoverColor: #4b57d6;
+    --taskBorderColor: #4e5159;
+    --scrollbarColor: #a09fa1;
+    --scrollbarHoverColor: #908f91;
+    /* ------- COLORS ------- */
+    --orange: rgb(255, 170, 0);
+}
+
+.logo {
+    width: 100%;
+    stroke: var(--logo);
 }
 
 .bulb {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2%;
     position: fixed;
     left: 0;
-    top: 0;
+    bottom: 0;
     fill: var(--bulb);
     cursor: pointer;
 }
@@ -76,12 +103,14 @@ html {
 
 #navigation {
     background-color: var(--navBackground);
+    position: relative;
 }
 
 #main {
     display: grid;
     grid-template-rows: minmax(0, 5fr) minmax(0, 95fr);
     background-color: var(--background);
+    overflow: auto;
 }
 
 .header {
@@ -90,11 +119,14 @@ html {
     align-items: center;
     background-color: var(--headerBackground);
     color: var(--text);
+    cursor: default;
 }
 
 .header--title {
     margin-left: 2rem;
     font-size: var(--largeText);
+    font-weight: 500;
+    letter-spacing: -0.50px;
 }
 
 .header--utils {
@@ -104,6 +136,11 @@ html {
     margin-right: 2rem;
     gap: 3rem;
     font-size: var(--smallText);
+}
+
+#searchField {
+    cursor: not-allowed;
+    /*! temporary since its not implemented*/
 }
 
 #taskBtn {
@@ -127,5 +164,184 @@ html {
 }
 
 .container {
-    background-color: var(--background);
+    width: 65%;
+    margin: 4rem auto;
+}
+
+#taskTabs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 2rem 0 0;
+}
+
+.tabs-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text);
+    font-size: var(--normalText);
+}
+
+.tab {
+    padding: 1.5rem 2rem;
+    font-weight: 500;
+    letter-spacing: 0.25px;
+    line-height: 0;
+    cursor: pointer;
+    /* ! fixing height change on hover */
+    border-bottom: 3px solid transparent;
+}
+
+.tab:not(.tab--active):hover {
+    border-bottom: 3px solid var(--tabHoverColor);
+    border-radius: 3px;
+}
+
+.tab--active {
+    border-bottom: 3px solid var(--tabBorderColor);
+    border-radius: 3px;
+}
+
+#taskHelp:visited,
+#taskHelp:link {
+    display: flex;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--normalText);
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+#taskHelp:hover .questionmark {
+    stroke: var(--linkHoverColor);
+}
+
+#taskHelp:hover .help-text {
+    color: var(--linkHoverColor);
+}
+
+#taskHelp:active {
+    transform: scale(0.98);
+}
+
+.questionmark {
+    stroke: var(--linkColor);
+    width: 2rem;
+    height: 2rem;
+}
+
+.help-text {
+    display: block;
+    color: var(--linkColor);
+}
+
+#tasksTable {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    color: var(--text);
+    font-size: var(--smallText);
+    font-weight: 500;
+    letter-spacing: -0.25px;
+    border-top: 1px solid var(--mainBorderColor);
+}
+
+#tasksTableBody {
+    overflow: auto;
+    flex: 1 1 auto;
+}
+
+#tasksTableBody::-webkit-scrollbar {
+    width: 1rem;
+}
+
+/* Track */
+#tasksTableBody::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+/* Handle */
+#tasksTableBody::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: var(--scrollbarColor);
+}
+
+/* Handle on hover */
+#tasksTableBody::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbarHoverColor);
+}
+
+.task-row--headline {
+    display: flex;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.task-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4rem;
+    margin-top: 1rem;
+    border: 1px solid var(--taskBorderColor);
+    cursor: grab;
+    margin-right: 0.1rem;
+}
+
+.task-row:first-child {
+    margin-top: 0;
+}
+
+/* .task-row--headline>* {} */
+
+.task-cell--head {
+    display: inline-block;
+    font-size: var(--smallText);
+    cursor: pointer;
+}
+
+.task-cell {
+    display: inline-block;
+    overflow: hidden;
+}
+
+.task-cell--name {
+    display: flex;
+    align-items: center;
+    position: relative;
+    gap: 1.5rem;
+    padding-left: 1rem;
+    width: 47.5%;
+}
+
+.task-cell--scheduled,
+.task-cell--time,
+.task-cell--due {
+    width: 17.5%;
+}
+
+.tick-icon {
+    width: 2rem;
+    cursor: pointer;
+}
+
+.tick-icon--ticked {
+    stroke: var(--btnColor);
+}
+
+.dot {
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+}
+
+.dot--orange {
+    background-color: var(--orange);
 }

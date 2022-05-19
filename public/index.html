@@ -14,6 +14,11 @@
 <body>
     <div id="wrapper">
         <nav id="navigation">
+            <svg xmlns="http://www.w3.org/2000/svg" class="logo" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
             <!-- DARKMODE TOGGLER -->
             <svg xmlns="http://www.w3.org/2000/svg" class="bulb" viewBox="0 0 20 20" fill="currentColor">
                 <path
@@ -24,11 +29,97 @@
             <header class="header">
                 <span class="header--title">Tasks</span>
                 <div class="header--utils">
-                    <span>SEARCH</span>
+                    <span id="searchField">SEARCH</span>
                     <button id="taskBtn">+ New Task</button>
                 </div>
             </header>
-            <div class="container"></div>
+            <div class="container">
+                <div id="taskTabs">
+                    <div class="tabs-container">
+                        <span class="tab tab--active">
+                            Active
+                        </span>
+                        <span class="tab">
+                            Partially Done
+                        </span>
+                        <span class="tab">
+                            Done
+                        </span>
+                    </div>
+                    <a id="taskHelp" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="questionmark" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span class="help-text">
+                            Tasks Help
+                        </span>
+                    </a>
+                </div>
+                <div id="tasksTable">
+                    <div class="task-row--headline">
+                        <span class="task-cell--head task-cell--name">
+                            <!-- empty -->
+                        </span>
+                        <span class="task-cell--head task-cell--scheduled">
+                            Scheduled
+                        </span>
+                        <span class="task-cell--head task-cell--time">
+                            Time left
+                        </span>
+                        <span class="task-cell--head task-cell--due">
+                            Due
+                        </span>
+                    </div>
+                    <div id="tasksTableBody">
+                        <div class="task-row">
+                            <span class="task-cell task-cell--name">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="tick-icon" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <div class="dot dot--orange"></div>
+                                <span>
+                                    Video Script - Zucks Geheimkeller
+                                </span>
+                            </span>
+                            <span class="task-cell task-cell--scheduled">
+                                Tomorrow at 9:30 am
+                            </span>
+                            <span class="task-cell task-cell--time">
+                                6 hrs
+                            </span>
+                            <span class="task-cell task-cell--due">
+                                in 70 days
+                            </span>
+                        </div>
+                        <div class="task-row">
+                            <span class="task-cell task-cell--name">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="tick-icon" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <div class="dot dot--orange"></div>
+                                <span>
+                                    Video Script - Zucks Geheimkeller
+                                </span>
+                            </span>
+                            <span class="task-cell task-cell--scheduled">
+                                Tomorrow at 9:30 am
+                            </span>
+                            <span class="task-cell task-cell--time">
+                                6 hrs
+                            </span>
+                            <span class="task-cell task-cell--due">
+                                in 70 days
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 </body>
