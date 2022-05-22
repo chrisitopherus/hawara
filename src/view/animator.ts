@@ -57,6 +57,12 @@ export class Animator {
         )
     }
 
+    /**
+     * Method for handling the deletion of the cloned element.
+     * @param taskElement Original element.
+     * @param clone Cloned element.
+     * @returns The Animation.
+     */
     cloneRemoval(taskElement: HTMLDivElement, clone: HTMLDivElement) {
         const start = +clone.style.transform.split('(')[1].split('px)')[0];
         return clone.animate(
