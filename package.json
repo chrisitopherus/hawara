@@ -1,0 +1,31 @@
+{
+  "name": "hawara",
+  "version": "0.1.0",
+  "description": "Hawara is your friend. Your friend that assists you with your time management :)",
+  "main": "./lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zitzennuggler/hawara.git"
+  },
+  "keywords": [
+    "time",
+    "management",
+    "friend"
+  ],
+  "author": "zitzennuggler",
+  "license": "MIT",
+  "types": "./lib\\index.d.ts",
+  "bugs": {
+    "url": "https://github.com/Zitzennuggler/hawara/issues"
+  },
+  "homepage": "https://github.com/Zitzennuggler/hawara#readme",
+  "devDependencies": {
+    "@types/jquery": "^3.5.14"
+  }
+}

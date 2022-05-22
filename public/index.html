@@ -6,8 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hawara</title>
-    <script type="module" src="../lib/index.js"></script>
+    <!-- scripts -->
     <script defer src="../lib/util/toggler.js"></script>
+    <script defer src="jquery.js"></script>
+    <script type="module" src="../lib/index.js"></script>
     <link rel="stylesheet" href="css/style.css" />
 </head>
 
@@ -40,7 +42,7 @@
                             Active
                         </span>
                         <span class="tab">
-                            Partially Done
+                            Not Started
                         </span>
                         <span class="tab">
                             Done
@@ -62,8 +64,8 @@
                         <span class="task-cell--head task-cell--name">
                             <!-- empty -->
                         </span>
-                        <span class="task-cell--head task-cell--scheduled">
-                            Scheduled
+                        <span class="task-cell--head task-cell--created">
+                            Created
                         </span>
                         <span class="task-cell--head task-cell--time">
                             Time left
@@ -73,50 +75,7 @@
                         </span>
                     </div>
                     <div id="tasksTableBody">
-                        <div class="task-row">
-                            <span class="task-cell task-cell--name">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="tick-icon" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <div class="dot dot--orange"></div>
-                                <span>
-                                    Video Script - Zucks Geheimkeller
-                                </span>
-                            </span>
-                            <span class="task-cell task-cell--scheduled">
-                                Tomorrow at 9:30 am
-                            </span>
-                            <span class="task-cell task-cell--time">
-                                6 hrs
-                            </span>
-                            <span class="task-cell task-cell--due">
-                                in 70 days
-                            </span>
-                        </div>
-                        <div class="task-row">
-                            <span class="task-cell task-cell--name">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="tick-icon" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <div class="dot dot--orange"></div>
-                                <span>
-                                    Video Script - Zucks Geheimkeller
-                                </span>
-                            </span>
-                            <span class="task-cell task-cell--scheduled">
-                                Tomorrow at 9:30 am
-                            </span>
-                            <span class="task-cell task-cell--time">
-                                6 hrs
-                            </span>
-                            <span class="task-cell task-cell--due">
-                                in 70 days
-                            </span>
-                        </div>
+                        <!-- rendered -->
                     </div>
                 </div>
             </div>

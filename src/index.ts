@@ -1,6 +1,4 @@
-// MVC
-import { Model } from "./model/model.js";
-import { View } from "./view/view.js";
+// Controller
 import { Controller } from "./controller/controller.js";
 
 console.log(Controller.getInstance());

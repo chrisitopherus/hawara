@@ -50,6 +50,8 @@ html {
 
     /* ------- COLORS ------- */
     --orange: rgb(255, 128, 0);
+    --green: rgb(32, 125, 32);
+    --red: rgb(197, 40, 40);
 }
 
 .mode--dark {
@@ -72,6 +74,8 @@ html {
     --scrollbarHoverColor: #908f91;
     /* ------- COLORS ------- */
     --orange: rgb(255, 170, 0);
+    --green: rgb(41, 200, 41);
+    --red: rgb(230, 34, 34);
 }
 
 .logo {
@@ -119,7 +123,7 @@ html {
     align-items: center;
     background-color: var(--headerBackground);
     color: var(--text);
-    cursor: default;
+    /* cursor: default; */
 }
 
 .header--title {
@@ -153,6 +157,7 @@ html {
     color: var(--btnTextColor);
     border: none;
     cursor: pointer;
+    transition: all 0.4s !important;
 }
 
 #taskBtn:hover {
@@ -194,7 +199,7 @@ html {
 }
 
 .tab:not(.tab--active):hover {
-    border-bottom: 3px solid var(--tabHoverColor);
+    border-bottom: 3px solid var(--tabHoverColor) !important;
     border-radius: 3px;
 }
 
@@ -250,6 +255,7 @@ html {
 }
 
 #tasksTableBody {
+    position: relative;
     overflow: auto;
     flex: 1 1 auto;
 }
@@ -291,8 +297,10 @@ html {
     height: 4rem;
     margin-top: 1rem;
     border: 1px solid var(--taskBorderColor);
-    cursor: grab;
+    cursor: default;
     margin-right: 0.1rem;
+    transition: none !important;
+    transition: opacity 0.3s !important;
 }
 
 .task-row:first-child {
@@ -305,6 +313,10 @@ html {
     display: inline-block;
     font-size: var(--smallText);
     cursor: pointer;
+}
+
+.task-cell--head:first-child {
+    cursor: default;
 }
 
 .task-cell {
@@ -321,15 +333,36 @@ html {
     width: 47.5%;
 }
 
-.task-cell--scheduled,
+.task-cell--created,
 .task-cell--time,
 .task-cell--due {
     width: 17.5%;
 }
 
-.tick-icon {
+.task-cell--due {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tick-icon,
+.drag-icon,
+.trash-icon {
     width: 2rem;
     cursor: pointer;
+}
+
+.drag-icon:hover {
+    fill: var(--linkColor);
+    cursor: grab;
+}
+
+.trash-icon {
+    margin-right: 1rem;
+}
+
+.trash-icon:hover {
+    stroke: var(--red);
 }
 
 .tick-icon--ticked {
@@ -344,4 +377,28 @@ html {
 
 .dot--orange {
     background-color: var(--orange);
+}
+
+.dot--green {
+    background-color: var(--green);
+}
+
+.dot--red {
+    background-color: var(--red);
+}
+
+.task--dragged {
+    opacity: 0.3;
+}
+
+.task--clone {
+    position: absolute;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    z-index: 1000;
+    opacity: 1;
+    pointer-events: none;
+    background-color: var(--headerBackground);
+    border: none;
 }
