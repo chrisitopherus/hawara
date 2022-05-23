@@ -299,8 +299,11 @@ html {
     border: 1px solid var(--taskBorderColor);
     cursor: default;
     margin-right: 0.1rem;
+    background-color: var(--background);
+    transform: translateY(0px);
     transition: none !important;
     transition: opacity 0.3s !important;
+    transition: transform 0.3s ease-out !important;
 }
 
 .task-row:first-child {
@@ -401,4 +404,5 @@ html {
     pointer-events: none;
     background-color: var(--headerBackground);
     border: none;
+    transition: none !important;
 }

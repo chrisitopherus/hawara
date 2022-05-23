@@ -1,13 +1,28 @@
 // import classes
 import { Task } from "./task.js";
-import { Controller } from "../controller/controller.js";
 // types
 import { ComponentConfig } from '../view/component';
+import { Position } from "../controller/task";
 
 export class Model {
     private static instance: Model;
     tasks: Task[] = [];
+    private _mouseState: Position = { x: 0, y: 0 };
+    get mouseState(): Readonly<Position> {
+        return this._mouseState;
+    }
+    set mouseState(value: Position) { this._mouseState = value; };
+    private _scrollState: number = 0;
+    get scrollState(): Readonly<number> { return this._scrollState; };
+    set scrollState(value: number) { this._scrollState = value; };
+
     private constructor() { }
+
+    /**
+     * Method for making sure that there is a only one view instance.
+     * @returns Instance of model.
+     * @static
+     */
     static getInstance() {
         if (this.instance) {
             return this.instance;

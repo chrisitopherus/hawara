@@ -58,13 +58,74 @@ export class Animator {
     }
 
     /**
+     * Method for animating the task swapping.
+     * @param taskElement Task element of the dragged element.
+     * @param swapElement Swap partner element.
+     */
+    swapTasks(taskElement: HTMLDivElement, swapElement: HTMLDivElement) {
+        const taskElementInfos = {
+            start: taskElement.getBoundingClientRect().y,
+            end: swapElement.getBoundingClientRect().y
+        };
+        const swapElementInfos = {
+            start: taskElementInfos.end,
+            end: taskElementInfos.start
+        };
+
+        const animationFirst = taskElement.animate(
+            [
+                // keyframes
+                // from
+                {
+                    transform: `translateY(0px)`,
+                    zIndex: "10"
+                },
+                // to
+                {
+                    transform: `translateY(${taskElementInfos.end - taskElementInfos.start}px)`
+                }
+            ],
+            {
+                fill: "none",
+                duration: 300,
+                easing: "ease-in"
+            }
+        )
+        animationFirst.addEventListener('finish', () => { })
+        return swapElement.animate(
+            [
+                // keyframes
+                // from
+                {
+                    transform: `translateY(0px)`,
+                    zIndex: "10"
+                },
+                // to
+                {
+                    transform: `translateY(${swapElementInfos.end - swapElementInfos.start}px)`
+                }
+            ],
+            {
+                fill: "none",
+                duration: 300,
+                easing: "ease-in"
+            }
+        )
+    }
+
+    /**
      * Method for handling the deletion of the cloned element.
      * @param taskElement Original element.
      * @param clone Cloned element.
      * @returns The Animation.
      */
-    cloneRemoval(taskElement: HTMLDivElement, clone: HTMLDivElement) {
-        const start = +clone.style.transform.split('(')[1].split('px)')[0];
+    cloneRemoval(taskElement: HTMLDivElement, clone: HTMLDivElement, scrollState: number) {
+        let start: number;
+        if (clone.style.transform) {
+            start = +clone.style.transform.split('(')[1].split('px)')[0];
+        } else {
+            return null;
+        }
         return clone.animate(
             [
                 // keyframes
@@ -75,12 +136,13 @@ export class Animator {
                 // to
                 {
                     transform: `translateY(0px)`,
-                    top: `${taskElement.getBoundingClientRect().y - this.viewInstance.taskContainer.getBoundingClientRect().y}px`
+                    top: `${taskElement.getBoundingClientRect().y - this.viewInstance.taskContainer.getBoundingClientRect().y + scrollState}px`
                 }
             ],
             {
                 duration: 500,
-                fill: "none"
+                fill: "none",
+                easing: "ease-out"
             }
         )
     }

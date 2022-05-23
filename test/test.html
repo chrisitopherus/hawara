@@ -6,17 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+        div {
+            width: 10px;
+            height: 10px;
+            background-color: black;
+            transition: transform 0.5s
+        }
+    </style>
 </head>
 
 <body>
     <div>
-        <input data-item="" type="checkbox" checked />
+
     </div>
     <script>
-        const input = document.querySelector('[data-item]');
-        input.onclick = function () {
-            console.log(this.parentElement);
-        }
+        const div = document.querySelector('div');
+        window.addEventListener('click', function () {
+            div.style.transform += 'translateY(100px)';
+        })
     </script>
 </body>
 

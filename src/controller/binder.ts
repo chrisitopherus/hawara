@@ -27,6 +27,7 @@ export class Binder {
      */
     private bindTask() {
         this.controllerInstance.view.binder.tabClickHandler(this.controllerInstance.tabClickHandler);
+        this.controllerInstance.view.binder.taskContainerScrollHandler(this.controllerInstance.taskContainerScrollHandler);
         this.controllerInstance.view.binder.addTaskClickHandler(this.controllerInstance.addTaskClickHandler);
     }
 }

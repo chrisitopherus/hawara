@@ -12,7 +12,10 @@ export class View {
     animator = new Animator(this);
     Component = Component;
 
-    public taskContainer = document.getElementById('tasksTableBody') as HTMLDivElement;
+    taskContainer = document.getElementById('tasksTableBody') as HTMLDivElement;
+
+    animatingTasks: HTMLDivElement[] = [];
+    animations: Animation[] = [];
     private constructor() {
     }
     /**
@@ -49,7 +52,6 @@ export class View {
      */
     controlGrabbingCursor() {
         const state = document.querySelector('html')!.style.cursor;
-        console.log(state);
         if (state) {
             document.querySelector('html')!.style.cursor = state === 'default' ? 'grabbing' : 'default';
         } else {
@@ -93,7 +95,8 @@ export class View {
      * @param mouseY Current y mouse position.
      */
     moveDraggedTask(clone: Clone, mouseY: number) {
-        clone.element.style.transform = `translateY(${((mouseY - this.taskContainer.getBoundingClientRect().y) - clone.element.getBoundingClientRect().height / 2) - +clone.element.style.top.split('px')[0]}px)`;
+        clone.element.style.transform = `translateY(${((mouseY - this.taskContainer.getBoundingClientRect().y + this.taskContainer.scrollTop) - clone.element.getBoundingClientRect().height / 2) - +clone.element.style.top.split('px')[0]}px)`;
+        // console.log(this.taskContainer.scrollHeight, clone.element.getBoundingClientRect().y);
     }
 
     /**
@@ -102,11 +105,52 @@ export class View {
      * @param dir Direction of the dragging.
      */
     swapTasks(tasks: [HTMLDivElement, HTMLDivElement], dir: "up" | "down") {
-        if (dir === "down") {
-            tasks[1].insertAdjacentElement('afterend', tasks[0]);
-        } else {
-            console.log('up');
-            tasks[1].insertAdjacentElement('beforebegin', tasks[0]);
+        if (this.animatingTasks.indexOf(tasks[1]) === -1) {
+            const taskElementInfos = {
+                start: tasks[0].getBoundingClientRect().y,
+                end: tasks[1].getBoundingClientRect().y
+            };
+            const swapElementInfos = {
+                start: taskElementInfos.end,
+                end: taskElementInfos.start
+            };
+            if (dir === "down") {
+                // this.animatingTasks.push(tasks[0], tasks[1]);
+                // const animation = this.animator.swapTasks(tasks[0], tasks[1]);
+                // animation.addEventListener('finish', () => {
+                //     this.animatingTasks.splice(this.animatingTasks.indexOf(tasks[0]), 1);
+                //     this.animatingTasks.splice(this.animatingTasks.indexOf(tasks[1]), 1);
+                //     tasks[1].insertAdjacentElement('afterend', tasks[0]);
+                // })
+                // tasks[0].style.transform = `translateY(${taskElementInfos.end - taskElementInfos.start}px)`;
+                // tasks[1].style.transform = `translateY(${swapElementInfos.end - swapElementInfos.start}px)`;
+                // setTimeout(() => {
+                //     tasks[0].style.transform = `translateY(0px)`;
+                //     tasks[1].style.transform = `translateY(0px)`;
+                //     this.animatingTasks.splice(this.animatingTasks.indexOf(tasks[0]), 1);
+                //     this.animatingTasks.splice(this.animatingTasks.indexOf(tasks[1]), 1);
+                //     tasks[1].insertAdjacentElement('afterend', tasks[0]);
+                // }, 300)
+                tasks[1].insertAdjacentElement('afterend', tasks[0]);
+            } else {
+                // this.animatingTasks.push(tasks[0], tasks[1]);
+                // const animation = this.animator.swapTasks(tasks[0], tasks[1]);
+                // animation.addEventListener('finish', () => {
+                //     this.animatingTasks.splice(this.animatingTasks.indexOf(tasks[0]), 1);
+                //     this.animatingTasks.splice(this.animatingTasks.indexOf(tasks[1]), 1);
+                //     tasks[1].insertAdjacentElement('beforebegin', tasks[0]);
+                // })
+                // tasks[0].style.transform = `translateY(${taskElementInfos.end - taskElementInfos.start}px)`;
+                // tasks[1].style.transform = `translateY(${swapElementInfos.end - swapElementInfos.start}px)`;
+                // setTimeout(() => {
+                //     tasks[0].style.transform = `translateY(0px)`;
+                //     tasks[1].style.transform = `translateY(0px)`;
+                //     this.animatingTasks.splice(this.animatingTasks.indexOf(tasks[0]), 1);
+                //     this.animatingTasks.splice(this.animatingTasks.indexOf(tasks[1]), 1);
+                //     tasks[1].insertAdjacentElement('beforebegin', tasks[0]);
+                // }, 300)
+                tasks[1].insertAdjacentElement('beforebegin', tasks[0]);
+            }
         }
     }
 
@@ -124,13 +168,20 @@ export class View {
      * @param taskElement The dragged element.
      * @param clone The clone of the dragged element.
      */
-    removeTaskClone(taskElement: HTMLDivElement, clone: HTMLDivElement) {
-        let animation = this.animator.cloneRemoval(taskElement, clone);
-        animation.addEventListener('finish', () => {
+    removeTaskClone(taskElement: HTMLDivElement, clone: HTMLDivElement, scrollState: number) {
+        let animation = this.animator.cloneRemoval(taskElement, clone, scrollState);
+        if (animation) {
+            animation.addEventListener('finish', () => {
+                // remove clone from dom
+                clone.remove();
+                // remove class from element
+                taskElement.classList.remove('task--dragged');
+            })
+        } else {
             // remove clone from dom
             clone.remove();
             // remove class from element
             taskElement.classList.remove('task--dragged');
-        })
+        }
     }
 }

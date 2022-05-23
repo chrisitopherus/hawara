@@ -1,6 +1,5 @@
 // import view
 import { View } from "./view.js";
-import { Draggable } from '../../lib/types/implents';
 
 export class Binder {
     constructor(private viewInstance: View) { }
@@ -13,6 +12,14 @@ export class Binder {
         ([...(document.querySelector('.tabs-container')!.children)] as HTMLSpanElement[]).forEach(tab => {
             tab.addEventListener('click', handler);
         });
+    }
+
+    /**
+     * Method for binding scroll handler to the taskContainer.
+     * @param handler Scroll handler function.
+     */
+    taskContainerScrollHandler(handler: (e: Event) => unknown) {
+        this.viewInstance.taskContainer.addEventListener('scroll', handler);
     }
 
     /**

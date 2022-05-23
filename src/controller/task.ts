@@ -4,7 +4,7 @@ import { View } from "../view/view.js";
 // import utilities
 import { dir } from '../util/dir.js';
 
-interface Position {
+export interface Position {
     x: number;
     y: number;
 }
@@ -28,6 +28,11 @@ export class TaskController {
      * @param event The mouse event.
      */
     taskDragStartHandler = (event: MouseEvent) => {
+        // update mouse state
+        this.modelInstance.mouseState = {
+            x: event.clientX,
+            y: event.clientY
+        };
         console.log('drag started');
         //! prevent text highlighting etc.
         event.preventDefault();
@@ -37,8 +42,8 @@ export class TaskController {
         this.currentTaskClone = {
             element: this.currentDraggedTask.cloneNode(true) as HTMLDivElement,
             position: {
-                x: this.currentDraggedTask.getBoundingClientRect().x - this.taskContainer.getBoundingClientRect().x,
-                y: this.currentDraggedTask.getBoundingClientRect().y - this.taskContainer.getBoundingClientRect().y
+                x: this.currentDraggedTask.getBoundingClientRect().x - this.taskContainer.getBoundingClientRect().x + this.taskContainer.scrollLeft,
+                y: this.currentDraggedTask.getBoundingClientRect().y - this.taskContainer.getBoundingClientRect().y + this.taskContainer.scrollTop
             }
         };
         // set starting position as previous position
@@ -57,6 +62,11 @@ export class TaskController {
      */
     taskDragHandler = (event: MouseEvent) => {
         if (this.currentDraggedTask && this.currentTaskClone) {
+            // update mouse state
+            this.modelInstance.mouseState = {
+                x: event.clientX,
+                y: event.clientY
+            };
             // move the clone to the current y position of the mouse
             this.viewInstance.moveDraggedTask(this.currentTaskClone, event.clientY);
             // update the clone position
@@ -71,11 +81,16 @@ export class TaskController {
         }
     }
 
+    taskCheckForAutoScroll() {
+
+    }
+
     /**
      * Method for handling and checking if the dragged cloned task is intersecting with another task.
      * @param y Position y.
+     * @param setDirection `Optional` If set then the direction will not be checked.
      */
-    taskDragOverHandler(y: number) {
+    taskDragOverHandler(y: number, setDirection?: "up" | "down") {
         if (this.currentTaskClone && this.currentDraggedTask) {
             // get height of cloned task
             const height = this.currentTaskClone!.element.getBoundingClientRect().height;
@@ -85,11 +100,13 @@ export class TaskController {
             const bottomY = y + height;
 
             // determine movement direction
-            const direction = dir(this.previousCoordinate, topY);
-
+            let direction: "up" | "down" | "none" = dir(this.previousCoordinate, topY);
+            if (setDirection) {
+                direction = setDirection;
+            }
             let foundElement: HTMLDivElement;
 
-            // checking direction a find accordingly an element
+            // checking direction to find accordingly an element
             if (direction === 'none') {
                 //! do nothing
                 return undefined;
@@ -130,7 +147,7 @@ export class TaskController {
             const temp = [this.currentDraggedTask, this.currentTaskClone.element] as const;
             this.currentDraggedTask = null;
             this.currentTaskClone = null;
-            this.viewInstance.removeTaskClone(temp[0], temp[1]);
+            this.viewInstance.removeTaskClone(temp[0], temp[1], this.modelInstance.scrollState);
         }
     }
 }

@@ -64,6 +64,44 @@ export class Controller {
     }
 
     /**
+     * Method for handling a scroll event on the taskContainer
+     * @param event The event.
+     */
+    taskContainerScrollHandler = (event: Event) => {
+        // getting the new scroll offset
+        const scrollOffset = this.view.taskContainer.scrollTop;
+        // if a drag operation is ongoing
+        if (this.taskController.currentDraggedTask && this.taskController.currentTaskClone) {
+            // determine direction of scrolling
+            let direction: "up" | "down"
+            if (scrollOffset > this.model.scrollState) {
+                // down
+                direction = "down"
+            } else {
+                // up
+                direction = "up"
+            }
+            // updating clone position 
+            this.view.moveDraggedTask(this.taskController.currentTaskClone, this.model.mouseState.y);
+            // update the clone position
+            this.taskController.currentTaskClone.position = {
+                x: this.taskController.currentTaskClone.element.getBoundingClientRect().x,
+                y: this.taskController.currentTaskClone.element.getBoundingClientRect().y
+            };
+            // updating scrollState
+            this.model.scrollState = scrollOffset;
+            // check if clones new position is also causing a swap
+            this.taskController.taskDragOverHandler(this.taskController.currentTaskClone.position.y, direction);
+
+            // update previous position
+            this.taskController.previousCoordinate = this.taskController.currentTaskClone.position.y;
+        } else {
+            // updating scrollState
+            this.model.scrollState = scrollOffset;
+        }
+    }
+
+    /**
      * Method for handling a click on the add task btn.
      * @param event The mouse event.
      */
